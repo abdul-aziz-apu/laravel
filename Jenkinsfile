@@ -21,10 +21,10 @@ pipeline {
         }
       }
     }
+  }
   post {
     always  { junit 'junit.xml' }
     success { echo 'Green' }
     failure { echo 'Red' }
   }
-}
 
