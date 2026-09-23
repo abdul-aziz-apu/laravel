@@ -3,6 +3,7 @@
 pipeline {
   agent { docker { image 'composer:2' } }
   environment { COMPOSER_HOME = '/tmp/composer' }
+  parameters { booleanParam(name: 'RUN_TESTS', defaultValue: true) }
   stages {
     stage('Install') {
       steps { sh 'composer install --no-interaction --prefer-dist' }
@@ -20,3 +21,4 @@ pipeline {
     failure { echo 'Red' }
   }
 }
+
