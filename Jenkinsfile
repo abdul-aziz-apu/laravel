@@ -1,3 +1,5 @@
+// Add a trivial comment
+
 pipeline {
   agent { docker { image 'composer:2' } }
   environment { COMPOSER_HOME = '/tmp/composer' }
