@@ -13,6 +13,7 @@ pipeline {
         sh 'cp .env.example .env && php artisan key:generate'
         sh 'php artisan test --log-junit junit.xml'
       }
+    }
     stage('Secret check') {
       steps {
         withCredentials([string(credentialsId: 'demo-token', variable: 'TOKEN')]) {
@@ -20,7 +21,6 @@ pipeline {
         }
       }
     }
-  }
   post {
     always  { junit 'junit.xml' }
     success { echo 'Green' }
