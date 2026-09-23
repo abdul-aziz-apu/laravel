@@ -27,4 +27,5 @@ pipeline {
     success { echo 'Green' }
     failure { echo 'Red' }
   }
+}
 
