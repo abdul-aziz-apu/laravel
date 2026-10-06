@@ -4,7 +4,7 @@ pipeline {
   }
 
   environment { COMPOSE_HOME = '/tmp/composer'}
-  
+
   parameters {
     booleanParam(name: 'RUN_TESTS', defaultValue: true)
   }
@@ -20,6 +20,14 @@ pipeline {
       steps {
         sh 'cp .env.example .env && php artisan key:generate'
         sh 'php artisan test --log-junit junit.xml'
+      }
+    }
+  }
+
+  stage('Secret Check') {
+    steps {
+      withCredentials([string(credentialsId: 'demo-token', variable: 'TOKEN')]) {
+        sh 'echo "token length: ${#TOKEN}"'
       }
     }
   }
