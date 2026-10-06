@@ -4,6 +4,10 @@ pipeline {
   }
 
   environment { COMPOSE_HOME = '/tmp/composer'}
+  
+  parameters {
+    booleanParam(name: 'RUN_TESTS', defaultValue: true)
+  }
 
   stages {
     stage('Install') {
