@@ -15,16 +15,16 @@ pipeline {
         stage('Env') {
             steps {
                 sh '''
-                    cat > .env <<'EOF'
-                    APP_NAME=Laravel
-                    APP_ENV=testing
-                    APP_DEBUG=true
-                    APP_KEY=
-                    DB_CONNECTION=sqlite
-                    DB_DATABASE=:memory:
-                    EOF
+                    printf '%s\n' \
+                    'APP_NAME=Laravel' \
+                    'APP_ENV=testing' \
+                    'APP_DEBUG=true' \
+                    'APP_KEY=' \
+                    'DB_CONNECTION=sqlite' \
+                    'DB_DATABASE=:memory:' \
+                    > .env
                     php artisan key:generate
-                    '''
+                '''
             }
         }
 
