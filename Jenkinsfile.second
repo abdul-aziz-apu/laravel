@@ -27,8 +27,11 @@ pipeline {
                     '''
             }
         }
+
         stage('Test') {
-            sh 'mkdir -p build && php artisan test --log-junit build/junit.xml'
+            steps {
+                sh 'mkdir -p build && php artisan test --log-junit build/junit.xml'
+            }
         }
     }
 
