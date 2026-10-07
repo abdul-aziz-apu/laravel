@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Install') {
             steps {
-                sh "composer install --no-interaction- --prefer-dist --ignore-platform-reqs"
+                sh "composer install --no-interaction --prefer-dist --ignore-platform-reqs"
             }
         }
         stage('Env') {
