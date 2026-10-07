@@ -1,0 +1,40 @@
+pipeline {
+    agent {
+        docker {
+            image 'composer:2'
+            args '-u root'
+        }
+    }
+
+    stages {
+        stage('Install') {
+            steps {
+                sh "composer install --no-interaction- --prefer-dist --ignore-platform-reqs"
+            }
+        }
+        stage('Env') {
+            steps {
+                sh '''
+                    cat > .env <<'EOF'
+                    APP_NAME=Laravel
+                    APP_ENV=testing
+                    APP_DEBUG=true
+                    APP_KEY=
+                    DB_CONNECTION=sqlite
+                    DB_DATABASE=:memory:
+                    EOF
+                    php artisan key:generate
+                    '''
+            }
+        }
+        stage('Test') {
+            sh 'mkdir -p build && php artisan test --log-junit build/junit.xml'
+        }
+    }
+
+    post {
+        always {
+            junit allowEmptyResults: true, testResults: 'build/junit.xml'
+        }
+    }
+}
